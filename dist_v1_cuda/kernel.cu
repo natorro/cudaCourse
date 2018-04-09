@@ -1,6 +1,7 @@
+#include <stdio.h>
 #define N 64 // Specify a constant value for array length.
 #define TPB 32
-#include <stdio.h>
+
 
 // A scaling function to convert integers 0,1,...,N-1
 // to evenly spaced floats ranging from 0 to 1.
@@ -18,9 +19,9 @@ __device__ float distance(float x1, float x2)
 
 __global__ void distanceKernel(float *d_out, float ref, int len){
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
-  float x = scale(i, N);
+  const float x = scale(i, N);
   d_out[i] = distance(x, ref);
-  // printf(“i = %2d: dist from %f to %f is %f.\n”, i, ref, x, d_out[i]);
+  printf("i = %2d: dist from %f to %f is %f.\n", i, ref, x, d_out[i]);
 }
 
 
@@ -35,10 +36,18 @@ int main()
   const float ref = 0.5f;
 
   /* for loop to scale the index to obtain coordinate value,
-   * compute the distance from the reference point,
-   * and store the result in the corresponding entry in out. */
+   *compute the distance from the reference point,
+   *and store the result in the corresponding entry in out. */
+
   distanceKernel<<<N/TPB, TPB>>>(d_out, ref, N);
   cudaFree(d_out);
   return 0;
 
 }
+
+
+
+
+
+
+
