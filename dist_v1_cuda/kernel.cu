@@ -20,7 +20,7 @@ __global__ void distanceKernel(float *d_out, float ref, int len){
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   float x = scale(i, N);
   d_out[i] = distance(x, ref);
-  printf(“i = %2d: dist from %f to %f es %f.\n”, i, ref, x, d_out[i]);
+  printf(“i = %2d: dist from %f to %f is %f.\n”, i, ref, x, d_out[i]);
 }
 
 
@@ -38,7 +38,7 @@ int main()
    * compute the distance from the reference point,
    * and store the result in the corresponding entry in out. */
   distanceKernel<<<N/TPB, TPB>>>(d_out, ref, N);
-
-  return 0;
   cudaFree(d_out);
+  return 0;
+
 }
