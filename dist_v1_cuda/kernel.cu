@@ -20,7 +20,7 @@ __global__ void distanceKernel(float *d_out, float ref, int len){
   const int i = blockIdx.x * blockDim.x + threadIdx.x;
   float x = scale(i, N);
   d_out[i] = distance(x, ref);
-#  printf(“i = %2d: dist from %f to %f is %f.\n”, i, ref, x, d_out[i]);
+  // printf(“i = %2d: dist from %f to %f is %f.\n”, i, ref, x, d_out[i]);
 }
 
 
