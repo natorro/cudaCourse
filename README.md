@@ -12,3 +12,11 @@ This tree is used for the Course on CUDA at the Physics Institute at UNAM.
 
    Second version of the distances code. 
 
+4. **cuda_mem_copy**
+
+   First attempt to copy arrays between host and device.
+
+5. **dist_v1_cuda**
+
+   First version of dist_v1 using CUDA.
+   
