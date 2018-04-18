@@ -1,5 +1,4 @@
-__global__ 
-void kernel2D( uchar4 *d_output, int w, int h, ... ) { 
+__global__ void kernel2D( uchar4 *d_output, int w, int h, ... ) { 
 // Compute column and row indices. 
 int c = blockIdx.x* blockDim.x + threadIdx.x; 
 int r = blockIdx.y* blockDim.y + threadIdx.y; 
