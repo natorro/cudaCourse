@@ -39,7 +39,7 @@ void printInstructions() {
   printf("flashlight interactions\n");
   printf("a: toggle mouse tracking mode\n");
   printf("arrow keys: move ref location\n");
-  printf("esc: close graphics window\n");
+  printf("q: close graphics window\n");
 }
 
 #endif
