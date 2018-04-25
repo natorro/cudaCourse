@@ -20,6 +20,10 @@ void distanceKernel(uchar4 *d_out, int w, int h, int2 pos) {
   d_out[i].w = 255;
 }
 
+/* Note that there is no host array, computation and display are both handled from the device
+   No cudaMalloc either, the render function in main.cpp declares a pointer d_out that gets its
+   value from CudaGraphicsResourceGetMappedPointer() and provides the CUDA pointer to the memory
+   allocated in the pixel buffer */ 
 void kernelLauncher(uchar4 *d_out, int w, int h, int2 pos) {
   const dim3 blockSize(TX, TY);
   const dim3 gridSize = dim3((w + TX - 1)/TX, (h + TY - 1)/TY);

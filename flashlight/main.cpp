@@ -21,6 +21,14 @@ GLuint pbo = 0; // OpenGL pixel buffer object
 GLuint tex = 0; // OpenGL texture object
 struct cudaGraphicsResource *cuda_pbo_resource;
 
+/* - Maps the pixel buffer to CUDA and gets a CUDA pointer to the
+     Buffer memory so it can serve as the output device array.
+   - Calls the wrapper function kernelLauncher that launches the kernel
+     to compute pixel values for the updated image.
+   - Unmaps the buffer so OpenGL can display the contents.
+   - If you want to change the interaction with your own CUDA program 
+     change the arguments to kernelLauncher to use your own */
+
 void render() {
   uchar4 *d_out = 0;
   cudaGraphicsMapResources(1, &cuda_pbo_resource, 0);
@@ -80,16 +88,19 @@ void exitfunc() {
 }
 
 int main(int argc, char** argv) {
-  printInstructions();
-  initGLUT(&argc, argv);
-  gluOrtho2D(0, W, H, 0);
-  glutKeyboardFunc(keyboard);
-  glutSpecialFunc(handleSpecialKeypress);
+  printInstructions(); // Print the instructions
+  initGLUT(&argc, argv); //initializes the GLUT library and sets up the specifications for the graphics window,
+                         //including the display mode (RGBA), the buffering (double), size (W x H), and title.
+  gluOrtho2D(0, W, H, 0); // establishes the viewing transform (simple orthographic projection).
+  glutKeyboardFunc(keyboard); // indicate that keyboard and mouse interactions will be specified by the functions
+                              // keyboard, handleSpecialKeypress, mouseMove, and mouseDrag
+  glutSpecialFunc(handleSpecialKeypress); 
   glutPassiveMotionFunc(mouseMove);
   glutMotionFunc(mouseDrag);
-  glutDisplayFunc(display);
+  glutDisplayFunc(display); // what is shown in the window is determined by the function display() 
   initPixelBuffer();
-  glutMainLoop();
-  atexit(exitfunc);
+  glutMainLoop(); // Loop principal de OpenGL para checar por cambios
+  atexit(exitfunc); // at exit performs the final clean up by undoing the resource registration and deleting
+                    // the OpenGL pixel buffer and texture 
   return 0;
 }

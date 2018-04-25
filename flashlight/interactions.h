@@ -9,7 +9,7 @@ bool dragMode = false; // mouse tracking mode
 
 void keyboard(unsigned char key, int x, int y) {
   if (key == 'a') dragMode = !dragMode; //toggle tracking mode
-  if (key == 27) exit(0);
+  if (key == 'q') exit(0);
   glutPostRedisplay();
 }
 
